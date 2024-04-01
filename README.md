@@ -1,5 +1,5 @@
 # hoverSlider
-JS slideshow that works by moving cursor/finger over it
+JS slideshow that works by moving cursor/finger over it. Should work without load/render blinking (even in firefox — it would be less complex otherwise >_<)
 
 
 ## Usage
