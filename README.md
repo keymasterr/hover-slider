@@ -13,6 +13,7 @@ JS slideshow that works by moving cursor/finger over it
 </head>
 <body>
   <!-- ... -->
+```
   
 2. Call `hoverSlider();` </body> to apply slideshow to every .hover_slider container with imgs inside. Or use custom selector as a parameter: `hoverSlider('.custom_slideshow_container')`.
 
