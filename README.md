@@ -1,10 +1,11 @@
 # hoverSlider
-JS slideshow that works by moving cursor/finger over it. Should work without load/render blinking (even in firefox — it would be less complex otherwise >_<)
+JS slideshow that works by moving cursor/finger over it. It should work without any flickering during load or rendering (in firefox as well)
+
+If container has width or height set, it will apply the first image aspect ratio to it. The rest of images will try to fit into or to cover (customizable) the result box. If the container sizes aren't set, the first image size will be used. Sizes of images with `@2x`/`@3x` in the filename will be calculated respectfully.
 
 
 ## Usage
-1. Include `hoverSlider.css` and `hoverSlider.js` in your HTML document:
-
+1. Include `hoverSlider.css` and `hoverSlider.js` in your HTML document
 ```html
 <head>
   <!-- ... -->
@@ -15,11 +16,20 @@ JS slideshow that works by moving cursor/finger over it. Should work without loa
   <!-- ... -->
 ```
   
-2. Call `hoverSlider();` </body> to apply slideshow to every .hover_slider container with imgs inside. Or use custom selector as a parameter: `hoverSlider('.custom_slideshow_container')`.
-
-3. (Optionally) Use container attributes to change hoverSlider appearance:
+2. Call `hoverSlider();` to apply slideshow to every _.hover_slider_ container with imgs inside. Alternatively, you can pass a custom selector as a parameter: `hoverSlider('.custom_slideshow_container')`
+```html
+  <!-- ... -->
+  <script>
+    hoverSlider();
+  </script>
+</body>
 ```
-data-ind=["dots"|"none"|else: dashes]
-data-fit=["cover"|else: contain]
-data-border=["none"|else: outline]
+
+3. Optionally, you can use container attributes to change the appearance of the hoverSlider
+```html
+<div class="hover_slider">
+  data-ind=["dots"|"none"|else: dashes] <!-- Indicator style -->
+  data-fit=["cover"|else: contain]
+  data-border=["none"|else: outline]
+</div>
 ```
