@@ -38,7 +38,6 @@
   bottom: -1px;
   display: flex;
   justify-content: center;
-  pointer-events: none;
 }
 .hover_slider .indmark {
   position: relative;
@@ -57,13 +56,18 @@
 .hover_slider[data-ind="none"] .hover_slider-indicator {
   display: none;
 }
+.hover_slider[data-ind="dots"] {
+  margin-bottom: 20px;
+}
+.hover_slider[data-ind="dots"] .hover_slider-indicator {
+  bottom: -16px;
+}
 .hover_slider[data-ind="dots"] .indmark {
   height: unset;
   width: 5px;
   aspect-ratio: 1;
   border-radius: 50%;
   margin: 4px;
-  bottom: -15px;
   background: rgba(0,0,0,.1);
   flex-shrink: 0;
 }
@@ -73,5 +77,5 @@
 
 
 .hover_slider.hover_slider-touch_active .hover_slider-window {
-/*  outline-color: #43a7ff;*/
+/*  outline-color: #43a7ff;
 }

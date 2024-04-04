@@ -11,16 +11,56 @@
   <style type="text/css">
     body {
       display: flex;
+      flex-direction: column;
       height: 100dvh;
       margin: 0;
       justify-content: center;
       align-items: center;
+      text-decoration-skip-ink: none;
+    }
+    h1 {
+     line-height: 1;
+     margin-bottom: -0.25em;
+    }
+    .radiogroup {
+        display: inline-flex;
+        --bdrs: 4px;
+        border-radius: calc(var(--bdrs) + 1px);
+        background: #e9e8e7; 
+        border: 1px solid transparent;
+        gap: 1px;
+
+        input[type="radio"] { display: none; }
+        input[type="radio"] + label {
+            white-space: nowrap;
+            display: inline-block;
+            padding: 0 .1em;
+            border-radius: var(--bdrs);
+            opacity: 0.75;
+            user-select: none;
+            cursor: pointer;
+        }
+        input[type="radio"]:checked + label {
+          background: #fff;
+          opacity: 1;
+          cursor: default;
+          user-select: auto;
+        }
     }
   </style>
 </head>
 <body>
 
+<h1>
+  HoverSlider
+</h1>
+<p><a href="https://github.com/keymasterr/hoverSlider">GitHub</a> · <a href="joke.html">pure CSS desktop-only version</a></p>
+<p>JS slideshow that works by moving cursor/finger over it</p>
+
 <div class="hover_slider"
+  data-ind="dots"
+  data-touch-relative="true"
+  data-touch-loop="true"
 >
   <!--
     data-ind=["dots"|"none"|else: dashes]
@@ -43,8 +83,59 @@
   <img src="example-12.png">
 </div>
 
+<p>
+  <code>
+    data-ind=<span class="radiogroup" id="param1">
+      <input type="radio" name="param1" id="param1-1" checked>
+      <label for="param1-1">"dots"</label>
+      <input type="radio" name="param1" id="param1-2">
+      <label for="param1-2">"none"</label>
+      <input type="radio" name="param1" id="param1-3">
+      <label for="param1-3">dashes</label>
+    </span>
+    <br>
+    data-border=<span class="radiogroup" id="param2">
+      <input type="radio" name="param2" id="param2-1">
+      <label for="param2-1">"none"</label>
+      <input type="radio" name="param2" id="param2-2" checked>
+      <label for="param2-2">outline</label>
+    </span>
+    <br>
+    data-fit="cover"
+    <br>
+    data-touch-relative="true"
+    <br>
+    data-touch-loop="true"
+  </code>
+</p>
+
 <script>
     hoverSlider();
+
+    document.querySelectorAll('#param1 input').forEach(el => el.addEventListener('click', e => {
+      const id = el.id;
+      const indsById = {
+        "param1-1": "dots",
+        "param1-2": "none",
+        "param1-3": ""
+      };
+      const ind = indsById[id];
+      if (ind !== undefined) {
+        document.querySelector('.hover_slider').dataset.ind = ind;
+      }
+    }));
+
+    document.querySelectorAll('#param2 input').forEach(el => el.addEventListener('click', e => {
+      const id = el.id;
+      const bdrsById = {
+        "param2-1": "none",
+        "param2-2": "",
+      };
+      const bdr = bdrsById[id];
+      if (bdr !== undefined) {
+        document.querySelector('.hover_slider').dataset.border = bdr;
+      }
+    }));
 </script>
 
 </body>

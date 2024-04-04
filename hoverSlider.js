@@ -18,6 +18,7 @@ function hoverSlider(containersSelector = '.hover_slider') {
     indicator.className = 'hover_slider-indicator';
     for (let i = 0; i < n; i++) {
       const indmark = document.createElement('div');
+      indmark.addEventListener('click', () => setActive(i));
       indmark.className = 'indmark';
       indicator.append(indmark);
     }
@@ -49,15 +50,15 @@ function hoverSlider(containersSelector = '.hover_slider') {
 
     let tsX, tsY, firstMove = 0, allowSlide = 1, curActiveId = 0, touchStartId;
 
-    cont.addEventListener('touchstart', (e) => {
+    imgWindow.addEventListener('touchstart', (e) => {
       tsX = e.touches[0].pageX;
       tsY = e.touches[0].pageY;
       allowSlide = 0;
       touchStartId = curActiveId;
     });
 
-    cont.addEventListener('mousemove', handleMove);
-    cont.addEventListener('touchmove', handleMove);
+    imgWindow.addEventListener('mousemove', handleMove);
+    imgWindow.addEventListener('touchmove', handleMove);
 
     function handleMove(e) {
       if (firstMove !== 0) return nextStep(e);
@@ -94,7 +95,7 @@ function hoverSlider(containersSelector = '.hover_slider') {
       setActive(nextActiveId, e.touches && touchLoop);
     }
 
-    cont.addEventListener('touchend', () => {
+    imgWindow.addEventListener('touchend', () => {
       firstMove = 0;
       allowSlide = 1;
       cont.classList.remove('hover_slider-touch_active');
