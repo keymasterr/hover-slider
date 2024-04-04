@@ -6,6 +6,9 @@ function hoverSlider(containersSelector = '.hover_slider') {
     const imgs = cont.querySelectorAll('img');
     const n = imgs.length;
 
+    const touchLoop = cont.dataset.touchLoop === 'true';
+    const touchRelative = cont.dataset.touchRelative === 'true';
+
     const imgWindow = document.createElement('div');
     imgWindow.className = 'hover_slider-window';
     imgWindow.append(...imgs);
@@ -35,12 +38,7 @@ function hoverSlider(containersSelector = '.hover_slider') {
       const naturalHeight = firstImg.naturalHeight;
 
       if (contWidth && contHeight) {
-        // Both dimensions are set, do nothing
-      } else if (contWidth) {
-        // cont.style.height = `${(contWidth * naturalHeight) / naturalWidth}px`; 
-        cont.style.aspectRatio = `${naturalWidth / naturalHeight}`;
-      } else if (contHeight) {
-        // cont.style.width = `${(contHeight * naturalWidth) / naturalHeight}px`;
+      } else if (contWidth || contHeight) {
         cont.style.aspectRatio = `${naturalWidth / naturalHeight}`;
       } else {
         const scale = firstImg.src.includes('@2x') ? 2 : (firstImg.src.includes('@3x') ? 3 : 1);
@@ -49,12 +47,13 @@ function hoverSlider(containersSelector = '.hover_slider') {
       }
     });
 
-    let tsX, tsY, firstMove = 0, allowSlide = 1, curActiveId = 1;
+    let tsX, tsY, firstMove = 0, allowSlide = 1, curActiveId = 0, touchStartId;
 
     cont.addEventListener('touchstart', (e) => {
       tsX = e.touches[0].pageX;
       tsY = e.touches[0].pageY;
       allowSlide = 0;
+      touchStartId = curActiveId;
     });
 
     cont.addEventListener('mousemove', handleMove);
@@ -64,7 +63,7 @@ function hoverSlider(containersSelector = '.hover_slider') {
       if (firstMove !== 0) return nextStep(e);
 
       firstMove = 1;
-      if (tsX) {
+      if (e.touches) {
         const diffX = Math.abs(tsX - (e.touches ? e.touches[0].pageX : e.pageX));
         const diffY = Math.abs(tsY - (e.touches ? e.touches[0].pageY : e.pageY));
         if (diffX > diffY && firstMove === 1) {
@@ -76,19 +75,23 @@ function hoverSlider(containersSelector = '.hover_slider') {
     }
 
     function nextStep(e) {
-      if (allowSlide === 1) {
-        e.preventDefault();
-        const curX = e.touches ? e.touches[0].pageX : e.pageX;
-        const xy = cont.getBoundingClientRect();
-        const w = cont.offsetWidth;
-        const relX = curX - xy.left;
+      if (allowSlide !== 1) return;
 
-        if (relX >= 0 && relX <= w) {
-          const x = relX / (w / n);
-          const active = Math.ceil(x);
-          setActive(active);
-        }
+      e.preventDefault();
+      const curX = e.touches ? e.touches[0].pageX : e.pageX;
+      const {left: contLeft} = cont.getBoundingClientRect();
+      const sectionWidth = cont.offsetWidth / n;
+      const relX = curX - contLeft;
+      let relDiff = 0;
+
+      if (e.touches && touchRelative) {
+        relDiff = (tsX - contLeft) - (sectionWidth * (touchStartId));
       }
+
+      const x = (relX  - relDiff) / sectionWidth;
+      let nextActiveId = ~~(x);
+
+      setActive(nextActiveId, e.touches && touchLoop);
     }
 
     cont.addEventListener('touchend', () => {
@@ -97,10 +100,12 @@ function hoverSlider(containersSelector = '.hover_slider') {
       cont.classList.remove('hover_slider-touch_active');
     });
 
-    function setActive(active) {
-      if (!active || curActiveId === active || active < 1 || active > n) return;
+    function setActive(nextActiveId, loop = false) {
+      if (typeof nextActiveId === 'undefined' || curActiveId === nextActiveId) return;
+      if (!loop && (nextActiveId < 0 || nextActiveId >= n)) return;
+      nextActiveId = ((nextActiveId % n) + n) % n;
 
-      const currentActiveImg = imgs[active - 1];
+      const currentActiveImg = imgs[nextActiveId];
       const previousActiveImgs = cont.querySelectorAll('.active');
 
       if (previousActiveImgs.length > 0) {
@@ -114,9 +119,9 @@ function hoverSlider(containersSelector = '.hover_slider') {
 
       const indmarks = indicator.querySelectorAll('.indmark');
       indmarks.forEach(el => el.classList.remove('active'));
-      indmarks[active - 1].classList.add('active');
+      indmarks[nextActiveId].classList.add('active');
 
-      curActiveId = active;
+      curActiveId = nextActiveId;
     }
   });
 }
