@@ -1,0 +1,81 @@
+.hover_slider {
+  position: relative;
+  font-size: 0;
+  width: auto;
+  height: auto;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.hover_slider-window {
+  position: absolute;
+  inset: 0;
+}
+.hover_slider img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+  object-fit: contain;
+  opacity: 0;
+}
+.hover_slider:not(:has(img.active)) img:first-child {
+  position: relative;
+  opacity: 1;
+  z-index: 0;
+}
+.hover_slider img.active {
+  position: relative;
+  opacity: 1;
+  z-index: 1;
+}
+.hover_slider img.prevActive {
+  opacity: 1;
+  z-index: 0;
+}
+.hover_slider-indicator {
+  position: absolute;
+  width: 100%;
+  bottom: -1px;
+  display: flex;
+  justify-content: center;
+}
+.hover_slider .indmark {
+  position: relative;
+  height: 1px;
+  width: 100%;
+}
+.hover_slider .indmark.active {
+  background: rgba(0,0,0,.35);
+}
+.hover_slider[data-fit="cover"] img {
+  object-fit: cover;
+}
+.hover_slider:not([data-border="none"]) .hover_slider-window {
+  outline: 1px solid rgba(0,0,0,.075);
+}
+.hover_slider[data-ind="none"] .hover_slider-indicator {
+  display: none;
+}
+.hover_slider[data-ind="dots"] {
+  margin-bottom: 20px;
+}
+.hover_slider[data-ind="dots"] .hover_slider-indicator {
+  bottom: -16px;
+}
+.hover_slider[data-ind="dots"] .indmark {
+  height: unset;
+  width: 5px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  margin: 4px;
+  background: rgba(0,0,0,.1);
+  flex-shrink: 0;
+}
+.hover_slider[data-ind="dots"] .indmark.active {
+  background: rgba(0,0,0,.5);
+}
+
+
+.hover_slider.hover_slider-touch_active .hover_slider-window {
+/*  outline-color: #43a7ff;
+}

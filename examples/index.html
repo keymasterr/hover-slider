@@ -1,9 +1,21 @@
 <!DOCTYPE HTML>
 <html lang="en-US">
 <head>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-5R4TVC9RXY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-5R4TVC9RXY');
+  </script>
+
+  
   <meta name="robots" content="noindex, nofollow">
-	<meta charset="UTF-8">
-	<title>hoverSlider.js</title>
+  <meta charset="UTF-8">
+  <title>hoverSlider.js</title>
 
   <link rel="stylesheet" href="hoverSlider.css">
   <script src="hoverSlider.js"></script>
@@ -12,7 +24,7 @@
     body {
       display: flex;
       flex-direction: column;
-      height: 100dvh;
+      min-height: 100svh;
       margin: 0;
       justify-content: center;
       align-items: center;
@@ -22,6 +34,7 @@
      line-height: 1;
      margin-bottom: -0.25em;
     }
+    .hover_slider { flex-shrink: 0; }
     .radiogroup {
         display: inline-flex;
         --bdrs: 4px;
@@ -52,7 +65,7 @@
 <body>
 
 <h1>
-  HoverSlider
+  hoverSlider
 </h1>
 <p><a href="https://github.com/keymasterr/hoverSlider">GitHub</a> · <a href="joke.html">pure CSS desktop-only version</a></p>
 <p>JS slideshow that works by moving cursor/finger over it</p>
