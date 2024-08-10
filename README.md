@@ -27,12 +27,14 @@ If container has width or height set, it will apply the first image aspect ratio
 
 3. Optionally, you can use container attributes to change the appearance of the hoverSlider
 ```html
-<div class="hover_slider">
+<div class="hover_slider"
   data-ind="dots" <!-- Indicator style: "dots" or "none", dashes by default  -->
   data-fit="cover" <!-- Object-fit for images: "cover", contain by default -->
   data-border="none" <!-- Set to "none" to remove the image outline -->
   data-touch-relative="true" <!-- Wherever the touch starts is the current slide -->
   data-touch-loop="true" <!-- Loop the slideshow for touchscreens -->
+>
+  <!-- img tags go here -->
 </div>
 ```
 
